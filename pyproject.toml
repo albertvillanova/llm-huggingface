@@ -1,0 +1,6 @@
+[project]
+name = "llm-huggingface"
+version = "0.1"
+
+[project.entry-points.llm]
+markov = "llm_huggingface"
