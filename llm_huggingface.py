@@ -12,6 +12,10 @@ class Huggingface(llm.Model):
     model_id = "huggingface"
 
     class Options(llm.Options):
+        model: str = Field(
+            default="bigcode/starcoder2-15b",
+            description="Hugging Face model to use.",
+        )
         max_new_tokens: int = Field(
             default=60,
             ge=0,
@@ -34,7 +38,7 @@ class Huggingface(llm.Model):
     def execute(self, prompt, stream, response, conversation):
         key = llm.get_key("", "huggingface", "LLM_HUGGINGFACE_KEY")
         headers = {"Authorization": f"Bearer {key}"}
-        url = "https://api-inference.huggingface.co/models/bigcode/starcoder2-15b"
+        url = f"https://api-inference.huggingface.co/models/{prompt.options.model}"
         inputs = prompt.prompt
         parameters = {
             "max_new_tokens": prompt.options.max_new_tokens,
